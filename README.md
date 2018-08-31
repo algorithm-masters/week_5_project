@@ -1,24 +1,29 @@
-# MIDTERM PROJECT
+# Dialogue Analysis Systems API (DASA)
+## Midterm Project
+##### Brandon Haynes, Chris Turner, Liz Mahoney, Max McFarland
+​
+## Requirements
+- needs a db (CRUD)
+- Needs users and auth/ authentication
+- Pryamid app
+- use NLTK 
+- Headless (send and recv data from httpy or postman)
+​
+### Our project
+- User (signup and add user to db)
+- Admin (have special authorization for data analysis)
+​
+### Use case (user)
+- Users hit analysis endpoint with their selected input (string input  250 words) 
+- NLTK the input
+- Store the data in a db (with ties to the user that sent it)
+- Send the response to the user
+- Can delete account and responses that are tied to them
+​
+### Use case (admin)
+- Hit a special admin user endpoint to see the data (numpy)
+- Manage users as needed (Create - Delete)
 
-Utilizing City of Seattle's API, and have user validation to access a database associated with the user which we will compare 
-against the API's database. We will use this logic to create a simple quiz
+### Getting Started
 
-## API
-
-Using python scripting language, pyramid restful framework, Django (TBD)
-
-
-## CHANGELOG
-
-
-2018-08-30
-==========
-
-- [x] Brainstorm project details
-- [x] Set up Readme.md
-- [x] Include .gitignore 
-
-
-###GETTING STARTED
-
-Link to Data Seattle API - [Data Seattle Link](https://data.seattle.gov/)
+Natural Learning Toolkit- [nltk](http://www.nltk.org/)
