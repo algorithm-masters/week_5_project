@@ -27,3 +27,10 @@
 ### Getting Started
 
 Natural Learning Toolkit- [nltk](http://www.nltk.org/)
+
+Create a db called midterm
+
+Run these commands:
+pip install -e ".[testing]"
+initialize_dasa_db development.ini
+
