@@ -19,7 +19,7 @@ class AuthAPIView(APIViewSet):
                 json_body={
                    'token': request.create_jwt_token(
                         user.email,
-                        roles=[role.name for role in user.roles],
+                        roles=[role.name for role in user.account_roles],
                         userName=user.email,
                     )
                 },
@@ -34,7 +34,7 @@ class AuthAPIView(APIViewSet):
                     json_body={
                         'token': request.create_jwt_token(
                             authenticated.email,
-                            roles=[role.name for role in authenticated.roles],
+                            roles=[role.name for role in authenticated.account_roles],
                             userName=authenticated.email,
                             expiration=1500,
                         )

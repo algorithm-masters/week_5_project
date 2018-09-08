@@ -12,7 +12,7 @@ class RootACL:
         pass
 
 def add_role_principals(userid, request):
-    return request.jwt_claims.get('roles', [])
+    return request.jwt_claims.get('account_roles', [])
 
 
 def main(global_config, **settings):
