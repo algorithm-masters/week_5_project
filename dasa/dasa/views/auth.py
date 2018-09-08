@@ -21,6 +21,7 @@ class AuthAPIView(APIViewSet):
                         user.email,
                         roles=[role.name for role in user.account_roles],
                         userName=user.email,
+                        expiration=345600
                     )
                 },
                 status=201
@@ -36,7 +37,7 @@ class AuthAPIView(APIViewSet):
                             authenticated.email,
                             roles=[role.name for role in authenticated.account_roles],
                             userName=authenticated.email,
-                            expiration=1500,
+                            expiration=345600,
                         )
                     }
                 )
