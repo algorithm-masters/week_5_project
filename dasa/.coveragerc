@@ -1,0 +1,3 @@
+[run]
+source = dasa
+omit = dasa/test*
