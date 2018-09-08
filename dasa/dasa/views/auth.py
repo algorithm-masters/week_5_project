@@ -5,11 +5,10 @@ from ..models import Account
 import json
 
 
-class AuthAPIViewset(APIViewSet):
+class AuthAPIView(APIViewSet):
     def create(self, request, auth=None):
         """Create a Auth instance for the user's account"""
         data = json.loads(request.body)
-
         if auth == 'register':
             try:
                 user = Account.new(request, data['email'], data['password'])
