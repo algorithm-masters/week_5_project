@@ -1,6 +1,6 @@
 # Dialogue Analysis Systems API (DASA)
 ## Midterm Project
-##### Brandon Haynes, Chris Turner, Liz Mahoney, Max McFarland
+##### Chris Turner, Liz Mahoney, Max McFarland
 ​
 ## Requirements
 - needs a db (CRUD)
