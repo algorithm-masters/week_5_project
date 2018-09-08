@@ -1,7 +1,6 @@
 from datetime import datetime as dt
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm import relationship
-
 from .meta import Base
 # from .associations import portfolios_associations
 from sqlalchemy import (

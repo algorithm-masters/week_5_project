@@ -4,6 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+cryptacular = "*"
+marshmallow = "*"
+sqlalchemy = "*"
+marshmallow-sqlalchemy = "*"
+requests = "*"
+pyramid-restful-framework = "*"
+"psycopg2-binary" = "*"
+pyramid-jwt = "*"
 
 [dev-packages]
 
