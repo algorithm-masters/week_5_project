@@ -7,12 +7,10 @@ import zope.sqlalchemy
 # Base.metadata prior to any initialization routines
 # from .mymodel import MyModel  # flake8: noqa
 
-from .nltk_output import NLTKOutput
-
-#TODO ADD ROLE, ACCOUNT ASSOC
 from .role import AccountRole
 from .account import Account
 from .associations import roles_association
+from .nltk_output import NLTKOutput
 
 
 # run configure_mappers after defining all of the models to ensure
