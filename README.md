@@ -34,3 +34,8 @@ Run these commands:
 pip install -e ".[testing]"
 initialize_dasa_db development.ini
 
+
+## Getting NLTK to work in the project
+Run the nltk setup file in the static folder to download all the needed NLTK sublibraries. 
+- you should get a popup window to select the modules to download (see nltk_downloads.png) if needed
+- select 'download all'
