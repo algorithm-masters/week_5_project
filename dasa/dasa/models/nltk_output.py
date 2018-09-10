@@ -27,12 +27,12 @@ class NLTKOutput(Base):
 
     @classmethod
     def new(cls, request, **kwargs):
-        """ Create a new portfolio
+        """ Create a new nltk analysis
         """
         if request.dbsession is None:
             raise DBAPIError
-        portfolio = cls(**kwargs)
-        request.dbsession.add(portfolio)
+        analysis = cls(**kwargs)
+        request.dbsession.add(analysis)
 
         return request.dbsession.query(cls).filter(
             cls.name == kwargs['name']).one_or_none()
