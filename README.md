@@ -39,3 +39,22 @@ initialize_dasa_db development.ini
 Run the nltk setup file in the static folder to download all the needed NLTK sublibraries. 
 - you should get a popup window to select the modules to download (see nltk_downloads.png) if needed
 - select 'download all'
+
+
+## Getting Started with Testing 
+
+One time database install for testing:
+    -Go to terminal and type:
+        > psql
+        > CREATE DATABASE dasa_api_test;
+            -should see CREATE DATABASE on the command line
+
+To OMIT certain files, Go to .coveragerc file:
+   - add path files with **/**/<file name> .coveragerc file.
+
+To run pytest on terminal:
+    - pipenv shell
+    - pytest --cov=dasa --disable-warnings -v
+
+
+    
