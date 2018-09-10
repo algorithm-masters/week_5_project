@@ -5,11 +5,10 @@ from ..models import Account
 import json
 
 
-class AuthAPIViewset(APIViewSet):
+class AuthAPIView(APIViewSet):
     def create(self, request, auth=None):
         """Create a Auth instance for the user's account"""
         data = json.loads(request.body)
-
         if auth == 'register':
             try:
                 user = Account.new(request, data['email'], data['password'])
@@ -20,8 +19,9 @@ class AuthAPIViewset(APIViewSet):
                 json_body={
                    'token': request.create_jwt_token(
                         user.email,
-                        roles=[role.name for role in user.roles],
+                        roles=[role.name for role in user.account_roles],
                         userName=user.email,
+                        expiration=345600
                     )
                 },
                 status=201
@@ -35,9 +35,9 @@ class AuthAPIViewset(APIViewSet):
                     json_body={
                         'token': request.create_jwt_token(
                             authenticated.email,
-                            roles=[role.name for role in authenticated.roles],
+                            roles=[role.name for role in authenticated.account_roles],
                             userName=authenticated.email,
-                            expiration=1500,
+                            expiration=345600,
                         )
                     }
                 )
