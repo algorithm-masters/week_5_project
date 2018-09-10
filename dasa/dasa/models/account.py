@@ -27,10 +27,9 @@ class Account(Base):
     email = Column(String(255), nullable=False, unique=True)
     password = Column(Text, nullable=False)
     # name this something nltk related -- check that
-    nltk_output = relationship('NLTKOutput', back_populates='accounts')
+    nltk_output = relationship(NLTKOutput, back_populates='accounts')
     
     account_roles = relationship('AccountRole', secondary=roles_association, back_populates='accounts')
-
     date_created = Column(DateTime, default=dt.now())
     date_updated = Column(DateTime, default=dt.now(), onupdate=dt.now())
 

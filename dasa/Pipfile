@@ -9,6 +9,11 @@ marshmallow = "*"
 sqlalchemy = "*"
 marshmallow-sqlalchemy = "*"
 requests = "*"
+pyramid-restful-framework = "*"
+"psycopg2-binary" = "*"
+pyramid-jwt = "*"
+nltk = "*"
+numpy = "*"
 
 [dev-packages]
 

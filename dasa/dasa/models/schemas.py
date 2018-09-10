@@ -26,7 +26,7 @@ class NltkResultsSchema(ModelSchema):
     """
     roles = fields.Nested(AccountRoleSchema, many=True, only='name')
     account = fields.Nested(AccountSchema, exclude=(
-        'password', 'locations', 'roles', 'date_created', 'date_updated'))
+        'password', 'nltk_result' 'roles', 'date_created', 'date_updated'))
 
     class Meta:
         model = NLTKOutput
