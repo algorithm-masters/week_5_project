@@ -97,18 +97,12 @@ def analyze(input_message):
         'Sentences':{},
         'Body':''
     }
-    for sentence_num in len(sentence_list):
+    for sentence_num in range(len(sentence_list)):
         ss = sid.polarity_scores(sentence_list[sentence_num])
-        analysis = []
-        for k in sorted(ss):
-            analysis.append('{0}: {1}, '.format(k, ss[k]), end='')
-        response_object['Sentences'][sentence_num] = [sentence_list[sentence_num], analysis]
+        response_object['Sentences'][sentence_num] = [sentence_list[sentence_num], ss]
 
     ss_body = sid.polarity_scores(input_message)
-    body_analysis = []
-    for k in sorted(ss_body):
-            body_analysis.append('{0}: {1}, '.format(k, ss_body[k]), end='')
-    response_object['Body'] = body_analysis
+    response_object['Body'] = ss_body
 
     return response_object
 
@@ -164,4 +158,4 @@ def analyze(input_message):
 #      print()
 # print(len(subj_docs))
 
-analyze("This is a positive sentence and really good! I hate my job and my boss sucks. I love pizza and it tastes great. Max is so smart. My dog is dumber than a box of rocks. Code Fellows is a great bootcamp")
+print(analyze("This is a positive sentence and really good! I hate my job and my boss sucks. I love pizza and it tastes great. Max is so smart. My dog is dumber than a box of rocks. Code Fellows is a great bootcamp"))
