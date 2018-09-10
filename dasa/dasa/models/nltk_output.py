@@ -37,7 +37,11 @@ class NLTKOutput(Base):
         if request.dbsession is None:
             raise DBAPIError
         unmodified_obj = analyze(kwargs['text'])
-        kwargs['nltk_result'] = json.dumps(unmodified_obj)
+        mod_sent = {}
+        for sent in unmodified_obj['Sentences']:
+            mod_sent[sent] = unmodified_obj['Sentences'][sent][1]
+        mod_obj = {'Sentences': mod_sent, 'Body': unmodified_obj['Body']}
+        kwargs['nltk_result'] = json.dumps(mod_obj)
         kwargs.pop('text', None)
 
 
@@ -46,8 +50,9 @@ class NLTKOutput(Base):
         # nltk = cls(**fake_obj)
         request.dbsession.add(nltk)
         # request.dbsession.flush()
-        return request.dbsession.query(cls).filter(
-            cast(cls.nltk_result, String) == kwargs['nltk_result']).one_or_none()
+        return [request.dbsession.query(cls).filter(
+            cast(cls.nltk_result, String) == kwargs['nltk_result']).one_or_none(), 
+            unmodified_obj]
 
     @classmethod
     def all(cls, request):
@@ -64,7 +69,6 @@ class NLTKOutput(Base):
         """
         if request.dbsession is None:
             raise DBAPIError
-        import pdb; pdb.set_trace()
         return request.dbsession.query(cls).get(pk)
 
     #  TODO: needs to be locked to a users account

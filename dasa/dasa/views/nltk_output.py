@@ -47,8 +47,7 @@ class NLTKAPIView(APIViewSet):
 
         schema = NltkResultsSchema()
         data = schema.dump(analysis).data
-
-        return Response(json=data, status=201)
+        return Response(json=analysis[1], status=201)
 
     # def retrieve(self, request, id=None):
     #     """This performs a GET request for one stock from the local database.
