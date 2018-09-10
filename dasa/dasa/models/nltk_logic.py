@@ -157,5 +157,3 @@ def analyze(input_message):
 #          print('{0}: {1}, '.format(k, ss[k]), end='')
 #      print()
 # print(len(subj_docs))
-
-print(analyze("This is a positive sentence and really good! I hate my job and my boss sucks. I love pizza and it tastes great. Max is so smart. My dog is dumber than a box of rocks. Code Fellows is a great bootcamp"))
