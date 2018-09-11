@@ -37,7 +37,6 @@ trainer = NaiveBayesClassifier.train
 classifier = sentim_analyzer.train(trainer, training_set)
 # Training classifier
 
-
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 def analyze(input_message):
@@ -64,3 +63,4 @@ def analyze(input_message):
     response_object['Body'] = ss_body
 
     return response_object
+

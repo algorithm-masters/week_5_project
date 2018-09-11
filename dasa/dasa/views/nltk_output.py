@@ -44,7 +44,6 @@ class NLTKAPIView(APIViewSet):
             analysis = NLTKOutput.new(request, **kwargs)
         except IntegrityError:
             return Response(json='Duplicate Key Error. Analysis already exists', status=409)
-
         # schema = NltkResultsSchema()
         # data = schema.dump(analysis).data
         return Response(json=analysis[1], status=201)
@@ -82,3 +81,4 @@ class NLTKAPIView(APIViewSet):
             return Response(json='Not Found', status=404)
 
         return Response(status=204)
+
