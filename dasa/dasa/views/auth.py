@@ -1,7 +1,7 @@
 from pyramid_restful.viewsets import APIViewSet
 from sqlalchemy.exc import IntegrityError
 from pyramid.response import Response
-from ..models import Account
+from ..models.account import Account
 import json
 
 

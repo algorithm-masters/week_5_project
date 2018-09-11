@@ -3,8 +3,12 @@ from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm import relationship
 from ..views import analyze
 from .meta import Base
-import json
+
+from ..views.nltk_logic import analyze
+
 # from .associations import portfolios_associations
+import json
+    
 from sqlalchemy import (
     Column,
     Index,
@@ -14,7 +18,12 @@ from sqlalchemy import (
     JSON,
     DateTime,
     ForeignKey,
-    cast
+
+    String,
+    cast,
+    JSON,
+
+
 )
 
 
