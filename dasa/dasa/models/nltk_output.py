@@ -1,7 +1,7 @@
 from datetime import datetime as dt
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm import relationship
-from .nltk_logic import analyze
+from ..views import analyze
 from .meta import Base
 import json
 # from .associations import portfolios_associations
