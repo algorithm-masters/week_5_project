@@ -1,8 +1,11 @@
 from datetime import datetime as dt
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy.orm import relationship
+from ..views import analyze
 from .meta import Base
+
 from ..views.nltk_logic import analyze
+
 # from .associations import portfolios_associations
 import json
     
@@ -11,11 +14,16 @@ from sqlalchemy import (
     Index,
     Integer,
     Text,
+    String,
+    JSON,
     DateTime,
     ForeignKey,
+
     String,
     cast,
     JSON,
+
+
 )
 
 
@@ -70,7 +78,6 @@ class NLTKOutput(Base):
         """
         if request.dbsession is None:
             raise DBAPIError
-        import pdb; pdb.set_trace()
         return request.dbsession.query(cls).get(pk)
 
     #  TODO: needs to be locked to a users account

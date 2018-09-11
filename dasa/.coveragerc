@@ -1,3 +1,6 @@
 [run]
 source = dasa
-omit = dasa/test*
+omit =
+    dasa/test*
+    **/**initializedb.py
+
