@@ -1,5 +1,6 @@
 from pyramid_restful.routers import ViewSetRouter
-from .views import AuthAPIView
+from .views.auth import AuthAPIView
+from .views.nltk_output import NLTKAPIView
 
 
 def includeme(config):
@@ -8,3 +9,4 @@ def includeme(config):
 
     router = ViewSetRouter(config, trailing_slash=False)
     router.register('api/v1/auth/{auth}', AuthAPIView, 'auth')
+    router.register('api/v1/analysis', NLTKAPIView, 'analysis')

@@ -1,9 +1,10 @@
-from ..models.schemas import NltkResultsSchema
+# from ..models.schemas import NltkResultsSchema
 from pyramid_restful.viewsets import APIViewSet
 from sqlalchemy.exc import IntegrityError, DataError
 from pyramid.view import view_config
 from pyramid.response import Response
-from ..models import NLTKOutput
+from ..models.nltk_output import NLTKOutput
+from ..models.account import Account
 import requests
 import json
 
@@ -32,17 +33,22 @@ class NLTKAPIView(APIViewSet):
         except json.JSONDecodeError as e:
             return Response(json=e.msg, status=400)
 
-        if 'symbol' not in kwargs:
-            return Response(json='Expected value: symbol', status=400)
+        if 'text' not in kwargs:
+            return Response(json='Expected value: text', status=400)
+
+        if request.authenticated_userid:
+            account = Account.one(request, request.authenticated_userid)
+            kwargs['account_id'] = account.id
+            
         try:
             analysis = NLTKOutput.new(request, **kwargs)
         except IntegrityError:
             return Response(json='Duplicate Key Error. Analysis already exists', status=409)
 
-        schema = NltkResultsSchema()
-        data = schema.dump(analysis).data
+        # schema = NltkResultsSchema()
+        # data = schema.dump(analysis).data
+        return Response(json=analysis[1], status=201)
 
-        return Response(json=data, status=201)
 
     def retrieve(self, request, id=None):
         """This performs a GET request for one stock from the local database.
