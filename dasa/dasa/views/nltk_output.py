@@ -9,15 +9,8 @@ import requests
 import json
 
 
-# @view_config(route_name='lookup', renderer='json', request_method='GET')
-# def lookup(request):
-#     """This is going to listen to a request from a specific endpoint.
-#     """
-#     symbol = request.matchdict['symbol']
-#     url = f'{API_URL}stock/{symbol}/company'
-#     response = requests.get(url)
 
-#     return Response(json=response.json(), status=200)
+
 
 
 class NLTKAPIView(APIViewSet):
