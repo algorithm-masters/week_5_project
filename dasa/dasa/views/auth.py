@@ -8,7 +8,8 @@ import json
 class AuthAPIView(APIViewSet):
     def create(self, request, auth=None):
         """Create a Auth instance for the user's account"""
-        data = json.loads(request.body)
+
+        data = json.loads(request.body.decode())
         if auth == 'register':
             try:
                 user = Account.new(request, data['email'], data['password'])

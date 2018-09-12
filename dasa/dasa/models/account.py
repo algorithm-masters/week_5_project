@@ -24,7 +24,7 @@ class Account(Base):
     """
     __tablename__ = 'accounts'
     id = Column(Integer, primary_key=True)
-    email = Column(String(255), nullable=False, unique=True)
+    email = Column(Text, nullable=False, unique=True)
     password = Column(Text, nullable=False)
     # name this something nltk related -- check that
     nltk_output = relationship(NLTKOutput, back_populates='accounts')
