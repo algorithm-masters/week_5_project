@@ -22,7 +22,7 @@ class NLTKAPIView(APIViewSet):
         """This performs a POST request for a new nltk analysis.
         """
         try:
-            kwargs = json.loads(request.body)
+            kwargs = json.loads(request.body.decode())
         except json.JSONDecodeError as e:
             return Response(json=e.msg, status=400)
 
