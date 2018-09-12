@@ -58,3 +58,22 @@ To run pytest on terminal:
 
 
     
+### On AWS:
+
+Setup an RDS postgres database
+- config your production.ini with the RDS address/password, etc
+- run:
+>initialize_dasa_db production.ini
+
+To update the EC2:
+> cd src 
+> git status
+> git pull origin master
+
+Restart gunicorn and verify it is working:
+> sudo systemctl restart gunicorn
+> sudo systemctl status gunicorn
+
+To Error check:
+> sudo journalctl -xe
+
