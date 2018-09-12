@@ -118,7 +118,6 @@ class Account(Base):
         if request.dbsession is None:
             raise DBAPIError
         try:
-            import pdb; pdb.set_trace()
             retrieved = request.dbsession.query(cls).filter(
                 cls.id == user_id).first()
         except DBAPIError:
