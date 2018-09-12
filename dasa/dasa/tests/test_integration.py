@@ -1,10 +1,18 @@
 import json
 
 
+# def test_home_route_successful(testapp):
+#     """Test Home route exists"""
+#     import pdb;pdb.set_trace()
+#     response = testapp.head(headers=200)
+#
+#     assert response.status_code == 200
+
+
 def test_registration(testapp):
     """Test registration for one user."""
     account = {
-        'email': 'test@example.com',
+        'email': 'test1@example.com',
         'password': 'hello',
     }
 
@@ -36,7 +44,7 @@ def test_invalid_registration(testapp):
 def test_login(testapp):
     """Test login successful."""
     account = {
-        'email': 'test@example.com',
+        'email': 'test1@example.com',
         'password': 'hello',
     }
 
@@ -51,7 +59,7 @@ def test_login(testapp):
 def test_duplicate_login(testapp):
     """Test login with duplicate keys."""
     account = {
-        'email': 'test@example.com',
+        'email': 'test1@example.com',
         'password': 'hello',
     }
 
@@ -61,6 +69,10 @@ def test_duplicate_login(testapp):
     )
     assert response.status_code == 409
     assert response.json['token']
+
+
+
+
 
 
 # def test_stocks_lookup(testapp):
