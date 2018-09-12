@@ -12,15 +12,11 @@ from sqlalchemy import (
     Index,
     Integer,
     Text,
-    String,
-    JSON,
     DateTime,
     ForeignKey,
     String,
     cast,
     JSON,
-
-
 )
 
 
@@ -49,7 +45,6 @@ class NLTKOutput(Base):
         mod_obj = {'Sentences': mod_sent, 'Body': unmodified_obj['Body']}
         kwargs['nltk_result'] = json.dumps(mod_obj)
         kwargs.pop('text', None)
-
 
         # fake_obj = {"account_id": 1, "nltk_result": json.dumps(['string'])}
         nltk = cls(**kwargs)
