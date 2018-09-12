@@ -11,6 +11,7 @@ class RootACL:
     def __init__(self, request):
         pass
 
+
 def add_role_principals(userid, request):
     return request.jwt_claims.get('account_roles', [])
 

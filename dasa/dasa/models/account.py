@@ -66,8 +66,18 @@ class Account(Base):
     def one(cls, request, email=None):
         """ Return one account based on the logged in users email address
         """
+        if request.dbsession is None:
+            raise DBAPIError
         return request.dbsession.query(cls).filter(
             cls.email == email).one_or_none()
+
+    @classmethod
+    def all(cls, request):
+        """ Return all account based on the logged in users email address
+        """
+        if request.dbsession is None:
+            raise DBAPIError
+        return request.dbsession.query(cls).all()
 
     @classmethod
     def check_credentials(cls, request, email, password):
@@ -87,3 +97,40 @@ class Account(Base):
                 return account
 
         return None
+
+    @classmethod
+    def check_admin(cls, request, user):
+        """Validate that a user is an admin
+        """
+        
+        # adding role to the user
+        # this is unsafe
+        # admin_role = request.dbsession.query(AccountRole).filter(
+        #     AccountRole.name == 'admin').one_or_none()
+
+        # user.account_roles.append(admin_role)
+        # request.dbsession.flush()
+
+        admin = False
+        user_id = user['account_id']
+
+        # import pdb; pdb.set_trace()
+        if request.dbsession is None:
+            raise DBAPIError
+        try:
+            retrieved = request.dbsession.query(cls).filter(
+                cls.id == user_id).first()
+        except DBAPIError:
+            return None
+        
+        role = retrieved.account_roles.pop()
+        
+        if role is not None:
+            # import pdb; pdb.set_trace()
+            if role.name == 'admin':
+                admin = True
+        
+        return admin
+            
+        
+

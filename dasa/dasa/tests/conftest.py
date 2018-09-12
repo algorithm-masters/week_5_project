@@ -9,7 +9,7 @@ fixtures for the whole test run."""
 
 @pytest.fixture(scope='session')
 def testapp(request):
-    """Function for setting up a test server/app."""
+    """Function for setting up a dasa_test_api server/app."""
     from webtest import TestApp
     from pyramid.config import Configurator
     from pyramid.authorization import ACLAuthorizationPolicy
