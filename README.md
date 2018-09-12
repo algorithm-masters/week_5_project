@@ -48,11 +48,12 @@ One time database install for testing:
         > psql
         > CREATE DATABASE dasa_api_test;
             -should see CREATE DATABASE on the command line
+        > \c dasa_api_test
 
 To OMIT certain files, Go to .coveragerc file:
    - add path files with **/**/<file name> .coveragerc file.
 
-To run pytest on terminal:
+To run pytest on terminal, go to dasa directory where the pipfile is located then run:
     - pipenv shell
     - pytest --cov=dasa --disable-warnings -v
 
