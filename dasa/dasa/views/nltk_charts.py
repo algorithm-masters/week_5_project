@@ -4,7 +4,7 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from ..models.nltk_output import NLTKOutput
 from ..models.account import Account
-from .chart_logic import chart_for_one_user, chart_get_all_analysis
+from .chart_logic import stacked_bar_for_one, stacked_bar_for_all
 import requests
 import json
 
@@ -61,6 +61,6 @@ class NLTKAPICharts(APIViewSet):
                         cleaned_data[record.account_id] = [record.nltk_result]
                 
                 # Send data to chart maker
-            response = chart_for_one_user(cleaned_data)
+            response = stacked_bar_for_one(cleaned_data)
     
         return Response(response.encode(), status=200)

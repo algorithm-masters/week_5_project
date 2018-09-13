@@ -4,7 +4,7 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from ..models.nltk_output import NLTKOutput
 from ..models.account import Account
-from .chart_logic import chart_for_one_user, chart_get_all_analysis, chart_get_all_pie
+from .chart_logic import stacked_bar_for_all, stacked_bar_for_one, pie_for_all
 import requests
 import json
 import html
@@ -34,7 +34,7 @@ class NLTKAPIAdmin(APIViewSet):
                             cleaned_data[record.account_id].append(record.nltk_result)
                         else:
                             cleaned_data[record.account_id] = [record.nltk_result]
-        return_obj = chart_for_one_user(cleaned_data)
+        return_obj = stacked_bar_for_one(cleaned_data)
         return Response(return_obj.encode(), status=200)
 
     # @list_route(methods=['get'])
@@ -56,9 +56,9 @@ class NLTKAPIAdmin(APIViewSet):
                 else:
                     cleaned_data[record.account_id] = [record.nltk_result]
             if graph_type == 'stacked_bar':
-                return_obj = chart_get_all_analysis(cleaned_data)
+                return_obj = stacked_bar_for_all(cleaned_data)
             if graph_type == 'pie':
-                return_obj = chart_get_all_pie(cleaned_data)
+                return_obj = pie_for_all(cleaned_data)
 
         return Response(return_obj.encode(), status=200)
 
