@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b9bd91a5a9d66240f73d300acbd1b136c08eac430e0b116461d100cea9cf8392"
+            "sha256": "445a5e45e928425e016c794aa0787676247ba298abe635afcd4aa0d31b83e88a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -138,6 +138,7 @@
                 "sha256:74c935a1b8bb9a3947c50a54766a969d4846290e1e788ea44c1392163723c3bd",
                 "sha256:f84be1bb0040caca4cea721fcbbbbd61f9be9464ca236387158b0feea01914a4"
             ],
+            "index": "pypi",
             "version": "==2.10"
         },
         "kiwisolver": {
@@ -428,6 +429,14 @@
                 "sha256:f7c87b4931c17a189a26758c40619e379b670cd18ae1823500ffdc7e79fb6ec9"
             ],
             "version": "==4.5"
+        },
+        "pyramid-jinja2": {
+            "hashes": [
+                "sha256:2e12f1f40d770be2d9680697bb7f9e3dd446341db254b8ebdd8539f9118ddd75",
+                "sha256:5c21081f65a5bec0b76957990c2b89ed41f4fd11257121387110cb722fd0e5eb"
+            ],
+            "index": "pypi",
+            "version": "==2.7"
         },
         "pyramid-jwt": {
             "hashes": [
