@@ -1,6 +1,6 @@
 import nltk
 import numpy
-nltk.download()
+# nltk.download()
 # be sure to select 'download all'
 
 print('hello nltk!')
