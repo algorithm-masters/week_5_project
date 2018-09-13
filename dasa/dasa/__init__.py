@@ -22,7 +22,7 @@ def main(global_config, **settings):
     config = Configurator(settings=settings)
     config.include('pyramid_jwt')
     config.include('pyramid_restful')
-
+    config.include('pyramid_jinja2')
     config.set_root_factory(RootACL)
     config.set_authorization_policy(ACLAuthorizationPolicy())
     config.set_jwt_authentication_policy(
