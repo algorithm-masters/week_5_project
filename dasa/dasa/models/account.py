@@ -111,17 +111,14 @@ class Account(Base):
 
         except DBAPIError:
             return None
+
+        roles = [role.name for role in retrieved.account_roles]
         
-
-        roles=[role.name for role in retrieved.account_roles]
-
         if 'admin' in roles:
             admin = True
         
         return admin
             
-        
-
     @classmethod
     def remove(cls, request=None, pk=None):
         """ Remove a users from the db

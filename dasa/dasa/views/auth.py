@@ -9,7 +9,6 @@ import json
 class AuthAPIView(APIViewSet):
     def create(self, request, auth=None):
         """Create a Auth instance for the user's account"""
-
         data = json.loads(request.body.decode())
         if auth == 'register':
             try:
@@ -57,5 +56,3 @@ class AuthAPIView(APIViewSet):
             return Response(json='Account and content deleted', status=204)
         
         return Response(json='Not Authorized', status=401)
-
-        # return Response(json='Not Found', status=404)
