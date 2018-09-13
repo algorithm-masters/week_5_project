@@ -15,6 +15,7 @@ def includeme(config):
     router.register('api/v1/analysis', NLTKAPIView, 'analysis')
     router.register('api/v1/users', GetAPIUsers, 'users_list')
     router.register('api/v1/charts/{graph_type}', NLTKAPICharts, 'charts')
-    router.register('api/v1/admin/{graph_type}', NLTKAPIAdmin, 'admin_visuals')
     router.register('api/v1/admin/delete/{user_id}', NLTKAPIAdmin, 'user_delete')
+    router.register('api/v1/admin/{graph_type}', NLTKAPIAdmin, 'admin_visuals')
+    
 
