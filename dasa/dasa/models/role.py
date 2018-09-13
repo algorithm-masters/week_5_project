@@ -17,4 +17,4 @@ class AccountRole(Base):
     __tablename__ = 'account_roles'
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False, unique=True)
-    accounts = relationship('Account', secondary=roles_association, back_populates='account_roles')
+    accounts = relationship('Account', secondary=roles_association, cascade="all, delete", back_populates='account_roles')
