@@ -36,7 +36,6 @@ class NLTKAPIAdmin(APIViewSet):
                 
                 # Send data to chart maker
 
-                
         return Response(json=cleaned_data, status=200)
 
     def retrieve(self, request, graph_type=None, user_id=None):
@@ -44,7 +43,6 @@ class NLTKAPIAdmin(APIViewSet):
         given chart type
         """
         user = {}
-        user_id = id
         if request.authenticated_userid:
             account = Account.one(request, request.authenticated_userid)
             user['account_id'] = account.id
@@ -54,9 +52,10 @@ class NLTKAPIAdmin(APIViewSet):
                 cleaned_data = {}
                 raw_data = NLTKOutput.all(request)
                 for record in raw_data:
-                    if record.account_id in cleaned_data:
-                        cleaned_data[record.account_id].append(record.nltk_result)
-                    else:
-                        cleaned_data[record.account_id] = [record.nltk_result]
+                    if record.account_id == user_id:
+                        if record.account_id in cleaned_data:
+                            cleaned_data[record.account_id].append(record.nltk_result)
+                        else:
+                            cleaned_data[record.account_id] = [record.nltk_result]
 
-        return Response(json='This works', status=200)
+        return Response(json=cleaned_data, status=200)
