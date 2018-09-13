@@ -17,8 +17,12 @@ class GetAPIUsers(APIViewSet):
             user['account_id'] = account.id
         
         if account.check_admin(request, user):
-            email_list = Account.all(request)
+            user_list = Account.all(request)
             schema = AccountSchema()
-            data = [schema.dump(email).data['email'] for email in email_list]
-            return Response(json=data, status=200)
+            emails = [schema.dump(email).data['email'] for email in user_list]
+            ids = [schema.dump(user_ids).data['id'] for user_ids in user_list]
+            ids_and_emails = {}
+            for i in range(len(emails)):
+                ids_and_emails[ids[i]] = emails[i]
+            return Response(json=ids_and_emails, status=200)
         return Response(json='Not Authorized', status=401)
