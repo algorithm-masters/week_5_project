@@ -2,10 +2,10 @@ from pyramid.response import Response
 from pyramid.view import view_config
 
 
-@view_config(route_name='home', renderer='json', request_method='GET')
+@view_config(route_name='home', renderer='templates/home.jinja2', request_method='GET')
 def lookup(request):
     """This is going to listen to a request from a specific endpoint.
     """
-    response = 'This route works!!'
+    response = 'This is the home page!! It works'
 
-    return Response(body=response, content_type='text/plain', status=200)
+    return {'message': response}
