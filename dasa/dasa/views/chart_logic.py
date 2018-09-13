@@ -11,6 +11,9 @@ from bokeh.io import curdoc, show
 from bokeh.core.properties import value
 from bokeh.io import show, output_file
 from bokeh.plotting import figure
+from bokeh.resources import CDN
+from bokeh.embed import file_html
+
 
 # from sklearn.model_selection import train_test_split
 # from sklearn.metrics import mean_squared_error
@@ -92,58 +95,105 @@ obj = {
 }
 
 
-class ChartsAPIView(APIViewSet):
-    def chart_for_one_user(self, data):
-        """ Chart display for one analysis/one user. """
-        pass
 
-    def chart_get_all_analysis(self, data):
-        """ Chart display for get analysis for all users combined.
-        This is for the admin to view a collection of user's analysis  """
-        pass
+def chart_for_one_user(data):
+    """ Chart display for one analysis/one user.
+    """
+    if data == {}:
+        return 'There is not data for this user'
+    chart = stacked_bar(data)
+    html = file_html(chart, CDN, "Single User Stacked Bar")
+    return html
+
+def chart_get_all_analysis(data):
+    """ Chart display for get analysis for all users combined.
+    This is for the admin to view a collection of user's analysis  """
+    if data == {}:
+        return 'There is no data in the database'
+    chart = stacked_bar(data)
+    html = file_html(chart, CDN, "All Users Stacked Bar")
+    return chart
+
+    
+
+
+
+def stacked_bar(data):
+    analysis_df = pd.DataFrame()
+    user_id = data.keys()
+    sentence_counter = 0
+    key_list = []
+    for key in user_id:
+        for one_record in data[key]:
+            record_obj = json.loads(one_record)
+            for sentence in record_obj['Sentences']:
+                # key_list.append(sentence)
+                ss = record_obj['Sentences'][sentence]
+                ss['sentence'] = sentence
+                columns = ['neg', 'neu', 'pos', 'compound', 'sentence']
+                sentence_counter += 1
+                key_list.append(str(sentence_counter))
+                index = [sentence_counter]
+                temp = pd.DataFrame(ss, columns=columns, index=index)
+                analysis_df = pd.concat([analysis_df, temp], sort=True)
+    output_file("stacked.html")
+    
+    import pdb; pdb.set_trace()
+    # key_list = list(obj['Sentences'].keys())
+    emotions = ['Negative', 'Neutral', 'Positive']
+    data = {'Sentences': analysis_df.index,
+            'Negative': analysis_df.neg,
+            'Neutral': analysis_df.neu,
+            'Positive': analysis_df.pos}
+    colors = ["#e84d60", "#c9d9d3", "#718dbf"]
+    p = figure(x_range=key_list, y_range=(0, 1.2), plot_height=500, title="Sentiment Analysis",
+            toolbar_location=None, tools="")
+    p.vbar_stack(emotions, x='Sentences', width=0.9, color=colors, source=data,
+                legend=[value(x) for x in emotions])
+    p.y_range.start = 0
+    p.x_range.range_padding = 0.2
+    p.xaxis.axis_label = 'Sentences'
+    p.yaxis.axis_label = 'Percentage (%)'
+    p.xgrid.grid_line_color = None
+    p.axis.minor_tick_line_color = None
+    p.outline_line_color = None
+    p.legend.location = "top_left"
+    p.legend.orientation = "horizontal"
+    return p
 
 # BELOW IS FROM JUPYTER NOTEBOOK
 # function takes in an object, return html.
-sid = SentimentIntensityAnalyzer()
-for sentence in sentences:
-    ss = sid.polarity_scores(sentence)
+# sid = SentimentIntensityAnalyzer()
+# for sentence in sentences:
+#     ss = sid.polarity_scores(sentence)
 
-df = pd.DataFrame()
-for i in range(len(obj)):
-    ss = sid.polarity_scores(sentences[i])
-    ss['text'] = sentences[i]
-    columns = ['neg', 'neu', 'pos', 'compound', 'text']
-    index = [i]
 
-    temp = pd.DataFrame(ss, columns=columns, index=index)
-    df = pd.concat([df, temp], sort=True)
+# # Bokeh
 
-# Bokeh
+# output_file("stacked.html")
 
-output_file("stacked.html")
+# emotions = ['Negative', 'Neutral', 'Positive']
 
-emotions = ['Negative', 'Neutral', 'Positive']
+# data = {'Sentences': df.index,
+#         'Negative': df.neg,
+#         'Neutral': df.neu,
+#         'Positive': df.pos}
+# colors = ["#e84d60", "#c9d9d3", "#718dbf"]
 
-data = {'Sentences': df.index,
-        'Negative': df.neg,
-        'Neutral': df.neu,
-        'Positive': df.pos}
-colors = ["#e84d60", "#c9d9d3", "#718dbf"]
+# key_list = list(obj['Sentences'].keys())
 
-key_list = list(obj['Sentences'].keys())
+# p = figure(x_range=key_list, y_range=(0, 1.2), plot_height=500, title="Sentiment Analysis",
+#            toolbar_location=None, tools="")
 
-p = figure(x_range=key_list, y_range=(0, 1.2), plot_height=500, title="Sentiment Analysis",
-           toolbar_location=None, tools="")
+# p.vbar_stack(emotions, x='Sentences', width=0.9, color=colors, source=data,
+#              legend=[value(x) for x in emotions])
 
-p.vbar_stack(emotions, x='Sentences', width=0.9, color=colors, source=data,
-             legend=[value(x) for x in emotions])
+# p.y_range.start = 0
+# p.x_range.range_padding = 0.2
+# p.xgrid.grid_line_color = None
+# p.axis.minor_tick_line_color = None
+# p.outline_line_color = None
+# p.legend.location = "top_left"
+# p.legend.orientation = "horizontal"
 
-p.y_range.start = 0
-p.x_range.range_padding = 0.2
-p.xgrid.grid_line_color = None
-p.axis.minor_tick_line_color = None
-p.outline_line_color = None
-p.legend.location = "top_left"
-p.legend.orientation = "horizontal"
-
-# show(p)
+# # show(p)

@@ -4,6 +4,7 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from ..models.nltk_output import NLTKOutput
 from ..models.account import Account
+from .chart_logic import chart_for_one_user, chart_get_all_analysis
 import requests
 import json
 
@@ -32,8 +33,8 @@ class NLTKAPIAdmin(APIViewSet):
                             cleaned_data[record.account_id].append(record.nltk_result)
                         else:
                             cleaned_data[record.account_id] = [record.nltk_result]
-
-        return Response(json=cleaned_data, status=200)
+        return_obj = chart_for_one_user(cleaned_data)
+        return Response(json=return_obj, status=200)
 
     # @list_route(methods=['get'])
     def list(self, request, graph_type=None):
