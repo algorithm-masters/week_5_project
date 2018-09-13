@@ -27,7 +27,7 @@ class NLTKOutput(Base):
     id = Column(Integer, primary_key=True)
     nltk_result = Column(JSON)
     account_id = Column(Integer, ForeignKey('accounts.id'), nullable=False)
-    accounts = relationship('Account', back_populates='nltk_output')
+    accounts = relationship('Account', cascade="all, delete", back_populates='nltk_output')
     date_created = Column(DateTime, default=dt.now())
     date_updated = Column(DateTime, default=dt.now(), onupdate=dt.now())
 
@@ -72,13 +72,11 @@ class NLTKOutput(Base):
             raise DBAPIError
         return request.dbsession.query(cls).get(pk)
 
-    #  TODO: needs to be locked to a users account
     @classmethod
-    def destroy(cls, request=None, pk=None):
-        """delete a users results
+    def remove(cls, request=None, pk=None):
+        """ Remove a users nltk anaylsis from the db
         """
         if request.dbsession is None:
             raise DBAPIError
 
-        return request.dbsession.query(cls).get(pk).delete()
-
+        return request.dbsession.query(cls).filter(cls.account_id == pk).delete()

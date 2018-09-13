@@ -15,6 +15,9 @@ pyramid-jwt = "*"
 nltk = "*"
 numpy = "*"
 dasa = {editable = true, path = ".", extras = ["testing"]}
+pandas = "*"
+matplotlib = "*"
+bokeh = "*"
 
 [dev-packages]
 

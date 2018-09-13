@@ -2,6 +2,7 @@ from pyramid_restful.viewsets import APIViewSet
 from sqlalchemy.exc import IntegrityError
 from pyramid.response import Response
 from ..models.account import Account
+from ..models.nltk_output import NLTKOutput
 import json
 
 
@@ -46,4 +47,15 @@ class AuthAPIView(APIViewSet):
 
         return Response(json='Not Found', status=404)
 
+    def delete(self, request, auth=None):
+        data = json.loads(request.body.decode())
+        authenticated = Account.check_credentials(request, data['email'], data['password'])
 
+        if authenticated:
+            NLTKOutput.remove(request=request, pk=authenticated.id)
+            Account.remove(request=request, pk=authenticated.id)
+            return Response(json='Account and content deleted', status=204)
+        
+        return Response(json='Not Authorized', status=401)
+
+        # return Response(json='Not Found', status=404)
