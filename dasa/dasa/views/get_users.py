@@ -11,6 +11,8 @@ import json
 
 class GetAPIUsers(APIViewSet):
     def list(self, request):
+        """ Returns the list of users in the database for the admin, users emails and ids
+        """
         user = {}
         if request.authenticated_userid:
             account = Account.one(request, request.authenticated_userid)

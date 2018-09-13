@@ -1,4 +1,3 @@
-# from ..models.schemas import NltkResultsSchema
 from pyramid_restful.viewsets import APIViewSet
 from sqlalchemy.exc import IntegrityError, DataError
 from pyramid.view import view_config
@@ -36,38 +35,3 @@ class NLTKAPIView(APIViewSet):
         # schema = NltkResultsSchema()
         # data = schema.dump(analysis).data
         return Response(json=analysis[1], status=201)
-
-
-    def retrieve(self, request, id=None):
-        """This performs a GET request for one stock from the local database.
-        """
-        record = StocksInfo.one(request, id)
-        if not record:
-            return Response(json='Not Found', status=404)
-        schema = StocksInfoSchema()
-        data = schema.dump(record).data
-
-        return Response(json=data, status=200)
-
-    def list(self, request):
-        """This performs a GET request for all the stocks in the local database.
-        """
-        records = StocksInfo.all(request)
-        schema = StocksInfoSchema()
-        data = [schema.dump(record) for record in records]
-
-        return Response(json=data, status=200)
-
-    def destroy(self, request, id=None):
-        """This performs a DELETE request for a single stock in the database.
-        """
-        if not id:
-            return Response(json='Not Found', status=404)
-
-        try:
-            StocksInfo.remove(request=request, pk=id)
-        except (DataError, AttributeError):
-            return Response(json='Not Found', status=404)
-
-        return Response(status=204)
-

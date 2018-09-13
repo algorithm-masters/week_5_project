@@ -12,7 +12,7 @@ class NLTKAPIAdmin(APIViewSet):
     """This will create the endpoints to visualize the data that has already
     been created within the database.
     """
-    
+
     # @detail_route(methods=['get'])
     def retrieve(self, request, graph_type=None, id=None):
         """This retrieves a single users data by email, and displays it with the
@@ -54,12 +54,12 @@ class NLTKAPIAdmin(APIViewSet):
                     cleaned_data[record.account_id].append(record.nltk_result)
                 else:
                     cleaned_data[record.account_id] = [record.nltk_result]
-            
-                # Send data to chart maker
 
         return Response(json=cleaned_data, status=200)
 
     def delete(self, request, user_id=None):
+        """ Admins are able to delete a user based on the provided id
+        """
         data = json.loads(request.body.decode())
         authenticated = Account.check_credentials(request, data['email'], data['password'])
         user = {}

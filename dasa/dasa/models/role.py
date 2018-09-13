@@ -9,7 +9,6 @@ from sqlalchemy import (
 )
 
 
-
 class AccountRole(Base):
     """Model class for creating User Roles in the application.
        Roles are pre-configured by our initialization script, but can be modified at the database shell level by an admin.
