@@ -61,5 +61,6 @@ class NLTKAPICharts(APIViewSet):
                         cleaned_data[record.account_id] = [record.nltk_result]
                 
                 # Send data to chart maker
-        response = chart_for_one_user(cleaned_data)
-        return Response(json=response, status=200)
+            response = chart_for_one_user(cleaned_data)
+    
+        return Response(response.encode(), status=200)
