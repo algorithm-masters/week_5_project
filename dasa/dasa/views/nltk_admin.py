@@ -58,3 +58,17 @@ class NLTKAPIAdmin(APIViewSet):
                 # Send data to chart maker
 
         return Response(json=cleaned_data, status=200)
+
+    def delete(self, request, user_id=None):
+        data = json.loads(request.body.decode())
+        authenticated = Account.check_credentials(request, data['email'], data['password'])
+        user = {}
+        user['account_id'] = authenticated.id
+
+        if authenticated.check_admin(request, user):
+            NLTKOutput.remove(request=request, pk=user_id)
+            Account.remove(request=request, pk=user_id)
+            return Response(json='Account and content deleted', status=204)
+
+        return Response(json='Not Authorized', status=401)
+

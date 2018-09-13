@@ -128,9 +128,6 @@ class Account(Base):
         """
         if request.dbsession is None:
             raise DBAPIError
-        # import pdb; pdb.set_trace()
-        # return request.dbsession.query(cls).filter(
-        #     cls.accounts.email == request.authenticated_userid
-        # ).filter(cls.id == pk).delete()
+
         return request.dbsession.query(cls).filter(cls.id == pk).delete()
         

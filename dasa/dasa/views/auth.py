@@ -45,35 +45,17 @@ class AuthAPIView(APIViewSet):
                 )
             return Response(json='Not Authorized', status=401)
 
-        if auth == 'delete':
-            authenticated = Account.check_credentials(request, data['email'], data['password'])
-
-            if authenticated:
-                # import pdb; pdb.set_trace()
-                NLTKOutput.remove(request=request, pk=authenticated.id)
-                # import pdb; pdb.set_trace()
-                Account.remove(request=request, pk=authenticated.id)
-                return Response(json='Account and content deleted', status=204)
-            
-            return Response(json='Not Authorized', status=401)
-
         return Response(json='Not Found', status=404)
 
+    def delete(self, request, auth=None):
+        data = json.loads(request.body.decode())
+        authenticated = Account.check_credentials(request, data['email'], data['password'])
 
+        if authenticated:
+            NLTKOutput.remove(request=request, pk=authenticated.id)
+            Account.remove(request=request, pk=authenticated.id)
+            return Response(json='Account and content deleted', status=204)
+        
+        return Response(json='Not Authorized', status=401)
 
-
-# def destroy(self, request, id=None):
-        # """
-        # """
-        # if not request.authenticated_userid:
-        #     return Response(json='Forbidden', status=403)
-
-        # if not id:
-        #     return Response(json='Not Found', status=404)
-
-        # try:
-        #     WeatherLocation.remove(request=request, pk=id)
-        # except (DataError, AttributeError):
-        #     return Response(json='Not Found', status=404)
-
-        # return Response(status=204)
+        # return Response(json='Not Found', status=404)
