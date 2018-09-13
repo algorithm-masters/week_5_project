@@ -26,10 +26,8 @@ class Account(Base):
     id = Column(Integer, primary_key=True)
     email = Column(Text, nullable=False, unique=True)
     password = Column(Text, nullable=False)
-    # name this something nltk related -- check that
-    nltk_output = relationship(NLTKOutput, back_populates='accounts')
-    
-    account_roles = relationship('AccountRole', secondary=roles_association, back_populates='accounts')
+    nltk_output = relationship(NLTKOutput, cascade="all, delete", back_populates='accounts')
+    account_roles = relationship('AccountRole', secondary=roles_association, cascade="all, delete", back_populates='accounts')
     date_created = Column(DateTime, default=dt.now())
     date_updated = Column(DateTime, default=dt.now(), onupdate=dt.now())
 
@@ -102,19 +100,9 @@ class Account(Base):
     def check_admin(cls, request, user):
         """Validate that a user is an admin
         """
-        
-        # adding role to the user
-        # this is unsafe
-        # admin_role = request.dbsession.query(AccountRole).filter(
-        #     AccountRole.name == 'admin').one_or_none()
-
-        # user.account_roles.append(admin_role)
-        # request.dbsession.flush()
-
         admin = False
         user_id = user['account_id']
 
-        # import pdb; pdb.set_trace()
         if request.dbsession is None:
             raise DBAPIError
         try:
@@ -124,6 +112,7 @@ class Account(Base):
         except DBAPIError:
             return None
         
+
         roles=[role.name for role in retrieved.account_roles]
 
         if 'admin' in roles:
@@ -133,3 +122,15 @@ class Account(Base):
             
         
 
+    @classmethod
+    def remove(cls, request=None, pk=None):
+        """ Remove a users from the db
+        """
+        if request.dbsession is None:
+            raise DBAPIError
+        # import pdb; pdb.set_trace()
+        # return request.dbsession.query(cls).filter(
+        #     cls.accounts.email == request.authenticated_userid
+        # ).filter(cls.id == pk).delete()
+        return request.dbsession.query(cls).filter(cls.id == pk).delete()
+        
