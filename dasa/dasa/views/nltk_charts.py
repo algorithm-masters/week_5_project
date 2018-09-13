@@ -44,7 +44,6 @@ class NLTKAPICharts(APIViewSet):
         converts it to the type of graph that is requested, and returns html containing that
         graph.
         """
-        import pdb; pdb.set_trace()
         user = {}
         if request.authenticated_userid:
             account = Account.one(request, request.authenticated_userid)
@@ -54,7 +53,7 @@ class NLTKAPICharts(APIViewSet):
             cleaned_data = {}
             raw_data = NLTKOutput.all(request)
             for record in raw_data:
-                if record.account_id == user.account_id:
+                if record.account_id == user['account_id']:
                     if record.account_id in cleaned_data:
                         cleaned_data[record.account_id].append(record.nltk_result)
                     else:
