@@ -26,10 +26,8 @@ class Account(Base):
     id = Column(Integer, primary_key=True)
     email = Column(Text, nullable=False, unique=True)
     password = Column(Text, nullable=False)
-    # name this something nltk related -- check that
-    nltk_output = relationship(NLTKOutput, back_populates='accounts')
-    
-    account_roles = relationship('AccountRole', secondary=roles_association, back_populates='accounts')
+    nltk_output = relationship(NLTKOutput, cascade="all, delete", back_populates='accounts')
+    account_roles = relationship('AccountRole', secondary=roles_association, cascade="all, delete", back_populates='accounts')
     date_created = Column(DateTime, default=dt.now())
     date_updated = Column(DateTime, default=dt.now(), onupdate=dt.now())
 
@@ -66,8 +64,18 @@ class Account(Base):
     def one(cls, request, email=None):
         """ Return one account based on the logged in users email address
         """
+        if request.dbsession is None:
+            raise DBAPIError
         return request.dbsession.query(cls).filter(
             cls.email == email).one_or_none()
+
+    @classmethod
+    def all(cls, request):
+        """ Return all account based on the logged in users email address
+        """
+        if request.dbsession is None:
+            raise DBAPIError
+        return request.dbsession.query(cls).all()
 
     @classmethod
     def check_credentials(cls, request, email, password):
@@ -87,3 +95,42 @@ class Account(Base):
                 return account
 
         return None
+
+    @classmethod
+    def check_admin(cls, request, user):
+        """Validate that a user is an admin
+        """
+        admin = False
+        user_id = user['account_id']
+
+        if request.dbsession is None:
+            raise DBAPIError
+        try:
+            retrieved = request.dbsession.query(cls).filter(
+                cls.id == user_id).first()
+
+        except DBAPIError:
+            return None
+        
+
+        roles=[role.name for role in retrieved.account_roles]
+
+        if 'admin' in roles:
+            admin = True
+        
+        return admin
+            
+        
+
+    @classmethod
+    def remove(cls, request=None, pk=None):
+        """ Remove a users from the db
+        """
+        if request.dbsession is None:
+            raise DBAPIError
+        # import pdb; pdb.set_trace()
+        # return request.dbsession.query(cls).filter(
+        #     cls.accounts.email == request.authenticated_userid
+        # ).filter(cls.id == pk).delete()
+        return request.dbsession.query(cls).filter(cls.id == pk).delete()
+        
