@@ -108,14 +108,15 @@ class Account(Base):
         try:
             retrieved = request.dbsession.query(cls).filter(
                 cls.id == user_id).first()
+
         except DBAPIError:
             return None
         
-        role = retrieved.account_roles.pop()
-        
-        if role is not None:
-            if role.name == 'admin':
-                admin = True
+
+        roles=[role.name for role in retrieved.account_roles]
+
+        if 'admin' in roles:
+            admin = True
         
         return admin
             
