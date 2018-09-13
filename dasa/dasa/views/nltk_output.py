@@ -4,6 +4,7 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from ..models.nltk_output import NLTKOutput
 from ..models.account import Account
+# from .chart_logic import chart_for_one_user
 import requests
 import json
 
@@ -32,6 +33,5 @@ class NLTKAPIView(APIViewSet):
             analysis = NLTKOutput.new(request, **kwargs)
         except IntegrityError:
             return Response(json='Duplicate Key Error. Analysis already exists', status=409)
-        # schema = NltkResultsSchema()
-        # data = schema.dump(analysis).data
+        
         return Response(json=analysis[1], status=201)

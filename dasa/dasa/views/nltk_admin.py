@@ -4,9 +4,10 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from ..models.nltk_output import NLTKOutput
 from ..models.account import Account
-from .chart_logic import chart_for_one_user, chart_get_all_analysis
+from .chart_logic import chart_for_one_user, chart_get_all_analysis, chart_get_all_pie
 import requests
 import json
+import html
 
 
 class NLTKAPIAdmin(APIViewSet):
@@ -34,7 +35,7 @@ class NLTKAPIAdmin(APIViewSet):
                         else:
                             cleaned_data[record.account_id] = [record.nltk_result]
         return_obj = chart_for_one_user(cleaned_data)
-        return Response(json=return_obj, status=200)
+        return Response(return_obj.encode(), status=200)
 
     # @list_route(methods=['get'])
     def list(self, request, graph_type=None):
@@ -46,7 +47,6 @@ class NLTKAPIAdmin(APIViewSet):
         if request.authenticated_userid:
             account = Account.one(request, request.authenticated_userid)
             user['account_id'] = account.id
-        
         if account.check_admin(request, user):
             cleaned_data = {}
             raw_data = NLTKOutput.all(request)
@@ -55,8 +55,12 @@ class NLTKAPIAdmin(APIViewSet):
                     cleaned_data[record.account_id].append(record.nltk_result)
                 else:
                     cleaned_data[record.account_id] = [record.nltk_result]
+            if graph_type == 'stacked_bar':
+                return_obj = chart_get_all_analysis(cleaned_data)
+            if graph_type == 'pie':
+                return_obj = chart_get_all_pie(cleaned_data)
 
-        return Response(json=cleaned_data, status=200)
+        return Response(return_obj.encode(), status=200)
 
     def delete(self, request, user_id=None):
         """ Admins are able to delete a user based on the provided id
