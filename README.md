@@ -66,15 +66,29 @@ Setup an RDS postgres database
 - run:
 >initialize_dasa_db production.ini
 
-To update the EC2:
+#### To update the EC2:
 > cd src 
 > git status
 > git pull origin master
+> pip3 install -e . --user
 
-Restart gunicorn and verify it is working:
+#### To update the RDS:
+> initialize_dasa_db production.ini
+
+
+#### Restart gunicorn and verify it is working:
 > sudo systemctl restart gunicorn
 > sudo systemctl status gunicorn
 
-To Error check:
+#### To Error check:
 > sudo journalctl -xe
 
+#### Clear the RDS tables (if needed)
+Connect to the database (needs password):
+> psql --host=dasadev2.cktmpeqirhch.us-west-2.rds.amazonaws.com --port=5432 --username=cturner --password --dbname=dasadev2
+> drop table account_roles cascade;
+> drop table accounts cascade;
+> drop table nltk_output cascade;
+> drop table nltk_output_id_seq cascade;
+> drop table nltk_output cascade;
+> drop table roles_association cascade;

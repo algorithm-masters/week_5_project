@@ -15,9 +15,8 @@ from ..models import (
     get_session_factory,
     get_tm_session,
     )
-from ..models import Account, AccountRole, roles_association, NLTKOutput
 
-# from ..models import MyModel
+from ..models import Account, AccountRole, roles_association, NLTKOutput
 
 
 def usage(argv):

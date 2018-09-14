@@ -31,7 +31,6 @@ class NLTKOutput(Base):
     date_created = Column(DateTime, default=dt.now())
     date_updated = Column(DateTime, default=dt.now(), onupdate=dt.now())
 
-
     @classmethod
     def new(cls, request, **kwargs):
         """ Create a new nltk analysis

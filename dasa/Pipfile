@@ -18,6 +18,9 @@ dasa = {editable = true, path = ".", extras = ["testing"]}
 pandas = "*"
 matplotlib = "*"
 bokeh = "*"
+"jinja2" = "*"
+"pyramid-jinja2" = "*"
+jupyter = "*"
 
 [dev-packages]
 
