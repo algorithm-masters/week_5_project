@@ -133,7 +133,7 @@ def pie_for_all(data):
                 neg_agg += ss['neg']
                 pos_agg += ss['pos']
                 neu_agg += ss['neu']
-    data_analysis = {'neg': neg_agg, 'pos': pos_agg, 'neu': neu_agg}
+    data_analysis = {'Negative': neg_agg, 'Positive': pos_agg, 'Neutral': neu_agg}
     x = Counter(data_analysis)
     
     df_analysis = pd.DataFrame.from_dict(dict(x), orient='index').reset_index().rename(index=str, columns={0:'value', 'index':'sentiment'})
