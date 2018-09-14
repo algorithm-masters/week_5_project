@@ -14,7 +14,7 @@ class AuthAPIView(APIViewSet):
             try:
                 user = Account.new(request, data['email'], data['password'])
             except (IntegrityError, KeyError):
-                return Response(json='Bad Request', status=400)
+                return Response(json='Not Authorized', status=400)
 
             return Response(
                 json_body={
@@ -51,8 +51,10 @@ class AuthAPIView(APIViewSet):
         authenticated = Account.check_credentials(request, data['email'], data['password'])
 
         if authenticated:
-            NLTKOutput.remove(request=request, pk=authenticated.id)
-            Account.remove(request=request, pk=authenticated.id)
-            return Response(json='Account and content deleted', status=204)
-        
+            try:
+                NLTKOutput.remove(request=request, pk=authenticated.id)
+                Account.remove(request=request, pk=authenticated.id)
+                return Response(json='Account and content deleted', status=204)
+            except(IntegrityError, KeyError):
+                return Response(json='Account not found', status=400)
         return Response(json='Not Authorized', status=401)
