@@ -166,15 +166,15 @@ def compound_for_all(data):
 
     source_bar = figure(plot_width=1000, plot_height=400, title="Compound Bar for All Users")
     source_bar.vbar(x=analysis_df.index, width=1, bottom=0, top=analysis_df['compound'], color="#718dbf")
-    source_bar.xaxis.axis_label = 'Sentances'
+    source_bar.xaxis.axis_label = 'Sentences'
     source_bar.yaxis.axis_label = 'Percentage'
     source_bar2 = figure(plot_width=1000, plot_height=400, title="Negative Bar for All Users")
     source_bar2.vbar(x=analysis_df.index, width=1, bottom=0, top=analysis_df['neg'], color="#e84d60")
-    source_bar2.xaxis.axis_label = 'Sentances'
+    source_bar2.xaxis.axis_label = 'Sentences'
     source_bar2.yaxis.axis_label = 'Percentage'
     source_bar3 = figure(plot_width=1000, plot_height=400, title="Positive Bar for All Users")
     source_bar3.vbar(x=analysis_df.index, width=1, bottom=0, top=analysis_df['pos'], color="#64b479")
-    source_bar3.xaxis.axis_label = 'Sentances'
+    source_bar3.xaxis.axis_label = 'Sentences'
     source_bar3.yaxis.axis_label = 'Percentage'
     graphs = [source_bar, source_bar2, source_bar3]
     html = file_html(graphs, CDN, "Compound bar for all")
