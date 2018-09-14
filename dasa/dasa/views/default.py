@@ -4,7 +4,13 @@ from pyramid.view import view_config
 
 @view_config(route_name='home', renderer='json', request_method='GET')
 def home_view(request):
-    """This is going to listen to a request from a specific endpoint.
+    """Displays the landing page of this webpage. This shows the possible API calls
+
+        Args:
+            requst- This is the GET request that is linked to the '/' path, which is the
+                    landing page.
+        Return:
+            A message containing the possible api route calls
     """
     message = """Welcome to the Dialogue Analysis Systems API (DASA)!
     Routes:
@@ -15,7 +21,7 @@ def home_view(request):
     'POST - api/v1/auth/login - BODY:{"email": "**Your Email Here**", "password": "**Your Password Here**"}
         -> This route will login to an existing account in the database and return a session bearer token.
     
-    'POST - api/v1/analysis - BODY:{"text": "**Your Text Here"}
+    'POST - api/v1/analysis - BODY:{"text": "**Your Text Here**"}
         -> This route will take in text and return a sentiment analysis using NLTK. 
         -> Each sentence will be analyzed for sentiment, as well as the entire body of the text.
         
