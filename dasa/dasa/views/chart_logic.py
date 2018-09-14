@@ -152,3 +152,42 @@ def pie_for_all(data):
     html = file_html(p, CDN, "All Users Pie")
     return html
 
+
+def compound_for_all(data):
+    if data == {}:
+        return 'There is not data for this user'
+    analysis_df = pd.DataFrame()
+    user_id = data.keys()
+    sentence_counter = 0
+    key_list = []
+    for key in user_id:
+        for one_record in data[key]:
+            record_obj = json.loads(one_record)
+            for sentence in record_obj['Sentences']:
+                # key_list.append(sentence)
+                ss = record_obj['Sentences'][sentence]
+                ss['sentence'] = sentence
+                columns = ['neg', 'neu', 'pos', 'compound', 'sentence']
+                sentence_counter += 1
+                key_list.append(str(sentence_counter))
+                index = [sentence_counter]
+                temp = pd.DataFrame(ss, columns=columns, index=index)
+                analysis_df = pd.concat([analysis_df, temp], sort=True)
+    output_file("stacked.html")
+
+    source_bar = figure(plot_width=1000, plot_height=400, title="Compound Bar for All Users")
+    source_bar.vbar(x=analysis_df.index, width=1, bottom=0, top=analysis_df['compound'], color="#718dbf")
+    source_bar.xaxis.axis_label = 'Sentances'
+    source_bar.yaxis.axis_label = 'Percentage'
+    source_bar2 = figure(plot_width=1000, plot_height=400, title="Negative Bar for All Users")
+    source_bar2.vbar(x=analysis_df.index, width=1, bottom=0, top=analysis_df['neg'], color="#e84d60")
+    source_bar2.xaxis.axis_label = 'Sentances'
+    source_bar2.yaxis.axis_label = 'Percentage'
+    source_bar3 = figure(plot_width=1000, plot_height=400, title="Positive Bar for All Users")
+    source_bar3.vbar(x=analysis_df.index, width=1, bottom=0, top=analysis_df['pos'], color="#64b479")
+    source_bar3.xaxis.axis_label = 'Sentances'
+    source_bar3.yaxis.axis_label = 'Percentage'
+    graphs = [source_bar, source_bar2, source_bar3]
+    html = file_html(graphs, CDN, "Compound bar for all")
+    return html
+        
