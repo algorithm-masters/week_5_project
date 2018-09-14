@@ -58,10 +58,3 @@ class AuthAPIView(APIViewSet):
             except(IntegrityError, KeyError):
                 return Response(json='Account not found', status=400)
         return Response(json='Not Authorized', status=401)
-
-
-@view_config(route_name='logout')
-def logout(request):
-    """Log out of current account."""
-    headers = forget(request)
-    return HTTPFound(location=request.route_url('home'), headers=headers)
