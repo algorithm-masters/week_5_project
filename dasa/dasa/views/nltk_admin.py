@@ -61,7 +61,6 @@ class NLTKAPIAdmin(APIViewSet):
                 return_obj = pie_for_all(cleaned_data)
             if graph_type == 'compound_bar':
                 return_obj = compound_for_all(cleaned_data)    
-
         return Response(return_obj.encode(), status=200)
 
     def delete(self, request, user_id=None):
