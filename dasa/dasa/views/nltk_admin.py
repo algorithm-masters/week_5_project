@@ -4,7 +4,7 @@ from pyramid.view import view_config
 from pyramid.response import Response
 from ..models.nltk_output import NLTKOutput
 from ..models.account import Account
-from .chart_logic import stacked_bar_for_all, stacked_bar_for_one, pie_for_all
+from .chart_logic import stacked_bar_for_all, stacked_bar_for_one, pie_for_all, compound_for_all
 import requests
 import json
 import html
@@ -59,6 +59,8 @@ class NLTKAPIAdmin(APIViewSet):
                 return_obj = stacked_bar_for_all(cleaned_data)
             if graph_type == 'pie':
                 return_obj = pie_for_all(cleaned_data)
+            if graph_type == 'compound_bar':
+                return_obj = compound_for_all(cleaned_data)    
 
         return Response(return_obj.encode(), status=200)
 
