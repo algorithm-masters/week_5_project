@@ -59,7 +59,6 @@ class NLTKAPIAdmin(APIViewSet):
                 return_obj = stacked_bar_for_all(cleaned_data)
             if graph_type == 'pie':
                 return_obj = pie_for_all(cleaned_data)
-
         return Response(return_obj.encode(), status=200)
 
     def delete(self, request, user_id=None):
