@@ -53,7 +53,7 @@ def stacked_bar_for_one(data):
             'Neutral': analysis_df.neu,
             'Positive': analysis_df.pos}
     colors = ["#e84d60", "#c9d9d3", "#718dbf"]
-    p = figure(x_range=key_list, y_range=(0, 1.2), plot_height=500, title="Sentiment Analysis",
+    p = figure(y_range=(0, 1.2), plot_height=500, title="Sentiment Analysis",
             toolbar_location=None, tools="")
     p.vbar_stack(emotions, x='Sentences', width=0.9, color=colors, source=data,
                 legend=[value(x) for x in emotions])
