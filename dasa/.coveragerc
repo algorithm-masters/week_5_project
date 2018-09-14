@@ -4,5 +4,9 @@ omit =
     dasa/test*
     **/**initializedb.py
     dasa/__init__.py
+    dasa/views/nltk_charts.py
+    dasa/views/nltk_admin.py
+    dasa/views/nltk_logic.py
+    dasa/views/chart_logic.py
 
 
